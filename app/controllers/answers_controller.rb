@@ -1,23 +1,26 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[destroy]
-  before_action :not_author_answer, only: :destroy
+  before_action :find_question, only: %i[create]
+  before_action :find_answer, only: %i[destroy update favorite]
+  before_action :not_author_answer, only: %i[destroy update]
 
   def create
     @answer = current_user.answers.new(answer_params)
     @answer.question = @question
+    @answer.save
+  end
 
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Your answer successfully created.'
-    else
-      render 'questions/show'
-    end
+  def update
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
     @answer.destroy
-    redirect_to question_path(@answer.question_id), notice: 'You answer successfully deleted.'
+  end
+
+  def favorite
+    @answer.make_favorite! if current_user.author_of?(@answer.question)
   end
 
   private
@@ -37,6 +40,7 @@ class AnswersController < ApplicationController
   def not_author_answer
     return if current_user.author_of?(@answer)
 
-    redirect_to question_path(@answer.question_id), notice: 'Only author can delete this answer.'
+    redirect_to question_path(@answer.question_id),
+                notice: 'Only author can do something with answer.'
   end
 end

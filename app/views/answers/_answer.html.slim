@@ -1,7 +1,25 @@
-- if answer.id.present?
-  li
-    tr
-      td
-        = answer.body
-      td
-        = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: "Are you sure?" }
+- if answer.persisted?
+
+  .answer id="answer-#{answer.id}"
+    .answer-errors id="answer-errors-#{answer.id}"
+
+    p id="answer-body-#{answer.id}"
+      = answer.body
+      
+    = answer.favorite? ? octicon('star-fill') : octicon('star')
+
+    - if current_user&.author_of?(answer.question) && !answer.favorite?
+      p
+        = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: {answer_id: answer.id } 
+    
+    - if current_user&.author_of?(answer)
+      p
+        = link_to 'Edit','#', class: 'edit-answer-link', data: {answer_id: answer.id}
+      p
+        = link_to 'Delete answer', answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true, data: {answer_id: answer.id, confirm: "Are you sure?" }
+    
+    = form_with model: answer,local: false, class: 'hidden', html:{id: "edit-answer-#{answer.id}"} do  |f|
+      = f.label :body, 'Your answer'
+      = f.text_area :body
+      = f.submit 'Save'
+    p | <<<<<<<<<<<<<<<

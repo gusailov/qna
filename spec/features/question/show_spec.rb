@@ -9,7 +9,7 @@ feature 'Any user can view question and its answers', %q{
   given(:question) { create(:question, user: user) }
   given!(:answers) { create_list(:answer, 5, question: question, user: user) }
 
-  scenario 'Unauthenticated user view question and its answers' do
+  scenario 'Unauthenticated user view question and its answers', js: true do
     visit question_path(question)
 
     expect(page).to have_content question.title
