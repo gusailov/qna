@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Author can delete his question', %q{
   For some reason,
-  As an author question
+  As an author of question
   I want to remove any of them
 } do
   given(:user) { create(:user) }

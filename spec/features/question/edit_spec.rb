@@ -28,6 +28,7 @@ feature 'Author can edit his question', %q{
       visit question_path(question)
       click_on 'Edit question'
     end
+
     scenario 'edits his question' do
       fill_in 'Question title', with: 'edited question title'
       fill_in 'Question body', with: 'edited question body'
@@ -47,6 +48,21 @@ feature 'Author can edit his question', %q{
       click_on 'Save'
 
       expect(page).to have_content "error(s) detected:"
+    end
+
+    scenario 'edits his question with attached files' do
+      within '.question' do
+        fill_in 'Question title', with: 'edited question title'
+        fill_in 'Question body', with: 'edited question body'
+
+        attach_file 'File',
+                    ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+
+        click_on 'Save'
+
+        expect(page).to have_link "rails_helper.rb"
+        expect(page).to have_link "spec_helper.rb"
+      end
     end
   end
 end

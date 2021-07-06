@@ -1,8 +1,13 @@
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-= form_with model: [@question, @answer], local: false ,class:"new-answer" do |form|
-  = form.label :body
-  = form.text_field :body
-  = form.submit 'Answer the question'
-  
+p | New answer:
+= form_with model: [@question, @answer], local: false, class: "new-answer" do |f|
+  p
+    = f.label :body
+    = f.text_field :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+  p
+    = f.submit 'Answer the question'

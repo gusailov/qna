@@ -27,5 +27,7 @@ module Qna
                        request_specs: false,
                        controller_specs: true
     end
+
+    config.active_storage.replace_on_assign_to_many = false
   end
 end
