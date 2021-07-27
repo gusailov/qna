@@ -75,6 +75,10 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #favorite' do
     before { login(user) }
 
+    let(:question) { create(:question, user: user) }
+
+    let!(:reward) { create(:reward, question: question) }
+
     let(:answer) { create(:answer, question: question, user: user) }
 
     it 'changes answer attribute favorite' do
@@ -85,6 +89,12 @@ RSpec.describe AnswersController, type: :controller do
     it 'renders favorite view' do
       patch :favorite, params: { id: answer }, format: :js
       expect(response).to render_template :favorite
+    end
+
+    it 'add reward to author of answer' do
+      expect {
+        patch :favorite, params: { id: answer }, format: :js
+      }.to change(answer.user.rewards, :count).by(1)
     end
   end
 

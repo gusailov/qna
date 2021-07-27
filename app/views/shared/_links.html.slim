@@ -1,0 +1,12 @@
+p Links:
+
+ul 
+  - resource.links.each do |link|
+    .link id="link-#{link.id}"
+      - if link.gist?
+        = link_to link.name, link.url
+
+        code data-gist-id="#{link.gist_id}"
+     
+      - else
+        li = link_to link.name, link.url

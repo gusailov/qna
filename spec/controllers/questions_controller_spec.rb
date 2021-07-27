@@ -33,11 +33,15 @@ RSpec.describe QuestionsController, type: :controller do
 
     it { expect(assigns(:question)).to be_a_new(Question) }
 
+    it { expect(assigns(:question).reward).to be_a_new(Reward) }
+
     it { expect(response).to render_template :new }
   end
 
   describe 'POST #create' do
     before { login(user) }
+
+    let(:question) { create(:question, :rewarded, user: user) }
 
     context 'with valid attributes' do
       it 'saves a new question in the database' do

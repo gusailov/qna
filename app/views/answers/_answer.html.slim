@@ -5,6 +5,9 @@
 
     p id="answer-body-#{answer.id}"
       = answer.body
+
+    . id="answer-#{answer.id}-links"
+      = render 'shared/links', resource: answer
     
     = answer.favorite? ? octicon('star-fill') : octicon('star')
 
@@ -29,6 +32,11 @@
       p
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      p
+        = f.fields_for :links do |l|
+          = render 'link_fields', f: l
+        .links
+          = link_to_add_association 'add link', f, :links
       p
         = f.submit 'Save'
     p | <<<<<<<<<<<<<<<

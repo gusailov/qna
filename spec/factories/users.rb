@@ -7,5 +7,9 @@ FactoryBot.define do
     email
     password { "12345678" }
     password_confirmation { "12345678" }
+
+    trait :rewarded do
+      rewards { Reward.new }
+    end
   end
 end
