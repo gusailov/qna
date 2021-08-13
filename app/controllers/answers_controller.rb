@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[update destroy favorite]
   before_action :not_author_answer, only: %i[update destroy]
 
+  include Voted
+
   def create
     @answer = current_user.answers.new(answer_params)
     @answer.question = @question

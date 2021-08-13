@@ -4,10 +4,17 @@
 .question
   h2 id="question-title"
     = @question.title
+  
   p id="question-body"
     | Question:
     = @question.body
-
+  
+  . id="question-#{@question.id}-rating"
+    | question rate:
+    = @question.rating
+  
+  = render 'shared/votes', resource: @question
+ 
   p | reward:  
 
   . id="question-reward"

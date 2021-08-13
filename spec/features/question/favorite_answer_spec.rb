@@ -10,6 +10,11 @@ feature 'User can mark one of question answers as favorite', %q{
   given!(:question) { create(:question, user: author) }
   given!(:answers) { create_list(:answer, 5, question: question, user: user) }
 
+   scenario 'failure', js: true do
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Edit question'
+  end
   scenario "Not author can't mark one of answers", js: true do
     sign_in(user)
     visit question_path(question)

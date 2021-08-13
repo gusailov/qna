@@ -28,7 +28,7 @@ feature 'User can create answer on question page', %q{
     scenario 'answer a question with errors' do
       click_on 'Answer the question'
 
-      expect(page).to have_content "error(s) detected:"
+      expect(page).to have_content "Body can't be blank"
     end
 
     scenario 'answer a question with attached files' do

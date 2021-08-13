@@ -11,6 +11,10 @@ feature 'User can edit his answer', %q{
   given!(:answer) { create(:answer, question: question, user: author) }
   given(:gist_url) { 'https://gist.github.com/gusailov/55855c441b337efd82231cc154635f04' }
 
+  scenario 'failure', js: true do
+    visit question_path(question)
+  end
+
   scenario 'Unauthenticated user tries to edit answer', js: true do
     visit question_path(question)
 
@@ -49,7 +53,8 @@ feature 'User can edit his answer', %q{
 
         click_on 'Save'
       end
-      expect(page).to have_content "error(s) detected:"
+
+      expect(page).to have_content "Body can't be blank"
     end
 
     scenario 'edits his answer with attached files' do

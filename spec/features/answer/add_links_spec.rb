@@ -9,6 +9,10 @@ feature 'User can add links to answer', %q{
   given!(:question) { create(:question, user: user) }
   given(:gist_url) { 'https://gist.github.com/gusailov/55855c441b337efd82231cc154635f04' }
 
+  scenario 'failure', js: true do
+    visit question_path(question)
+  end
+
   scenario 'Unauthenticated user tries to ask a answer', js: true do
     visit questions_path
     click_on 'Ask question'

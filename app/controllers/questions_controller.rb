@@ -3,6 +3,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show update destroy]
   before_action :not_author_question, only: %i[update destroy]
 
+  include Voted
+
   def index
     @questions = Question.all
   end
