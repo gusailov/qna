@@ -1,0 +1,95 @@
+- if @answer 
+  .answer id="answer-#{@answer.id}"
+    . id="answer-errors-#{@answer.id}"
+
+    p id="answer-body-#{@answer.id}"
+      = @answer.body
+
+    . id="answer-#{@answer.id}-rating"
+      | answer rate:
+      == @answer_rating
+
+    - unless gon.user_id == @answer.user_id
+      . id="answer-#{@answer.id}-vote"
+        . id="vote-errors"
+        p Vote:
+        . id="answer-#{@answer.id}-vote_up"
+          a.vote href="/answers/#{@answer.id}/vote_up" rel="nofollow" data-type="json" data-method="post" data-remote="true" Positive
+        . id="answer-#{@answer.id}-vote_down"
+          a.vote href="/answers/#{@answer.id}/vote_down" rel="nofollow" data-type="json" data-method="post" data-remote="true" Negative
+        . id="answer-#{@answer.id}-reset_vote" class="hidden"
+          a.vote  href="/answers/#{@answer.id}/vote_reset" rel="nofollow" data-type="json" data-method="patch" data-remote="true" Reset Vote
+
+    . id="answer-#{@answer.id}-comments"
+  
+      p Comments:
+
+      . id="comment-errors"
+      
+      form.comment_submit class="hidden " data-remote="true" id="comment-answer-#{@answer.id}" action="/answers/#{@answer.id}/add_comment" method="post" accept-charset="UTF-8"
+        input type="hidden" name="authenticity_token" value="#{gon.authenticity_token}"
+        p
+          label for="comment_body" Comment body
+          textarea id="comment_body" name="comment[body]"
+        p
+          input type="submit" value="Add" name="commit" data-disable-with="Add"
+   
+    a.add-comment-link href="#" data-resource-id="#{@answer.id}" data-resource-name="answer" Add comment
+        
+    . id="answer-#{@answer.id}-links"
+    
+    p Links:
+    - if @answer_links.length > 0
+      ul
+        - for l in @answer_links
+          .link id="link-#{l.id}"
+          - if l.gist
+            a.gist href="#{l.url}" = l.name
+            code data-gist-id="#{l.gist_id}" style="display: block;"
+                .gist
+
+          - else 
+            li
+              a href="#{l.url}" = l.name  
+    
+    svg.octicon class="octicon-star" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"
+    - if gon.user_id == @question.user_id
+      p
+        a.favorite-answer-link data-answer-id="#{@answer.id}" data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/favorite" Favorite
+
+    . id="answer-#{@answer.id}-files"
+      - if @answer_files.length > 0
+        - for f in @answer_files
+          .file id="file-#{f.id}" 
+            a href=f.file_url #{f.name}
+
+            - if gon.user_id == @answer.user_id
+              p
+                a data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/attachments/#{f.id}" delete_file
+
+    - if gon.user_id == @answer.user_id
+      p 
+        a.edit-answer-link data-answer-id="#{@answer.id}" href="#" Edit
+      p 
+        a.delete-answer-link data-answer-id="#{@answer.id}" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@answer.id}" Delete answer
+
+        form.hidden id="edit-answer-#{@answer.id}" enctype="multipart/form-data" action="/answers/#{@answer.id}" accept-charset="UTF-8" data-remote="true" method="post"
+          input type="hidden" name="_method" value="patch"
+          input type="hidden" name="authenticity_token" value="#{gon.authenticity_token}"
+
+          p
+            label for="answer_body" Your answer
+            textarea name="answer[body]" id="answer_body" UserAnswer
+
+          p
+            label for="answer_files" Files
+            input multiple="multiple" data-direct-upload-url="http://localhost:3000/rails/active_storage/direct_uploads" type="file" name="answer[files][]" id="answer_files"
+
+          p
+          .links
+            <a class="add_fields" data-association="link" data-associations="links" data-association-insertion-template="<div class=&quot;nested-fields&quot;><div class=&quot;field&quot;><label for=&quot;answer_links_attributes_new_links_name&quot;>Link name</label><input type=&quot;text&quot; name=&quot;answer[links_attributes][new_links][name]&quot; id=&quot;answer_links_attributes_new_links_name&quot; /></div><div class=&quot;field&quot;><label for=&quot;answer_links_attributes_new_links_url&quot;>Url</label><input type=&quot;text&quot; name=&quot;answer[links_attributes][new_links][url]&quot; id=&quot;answer_links_attributes_new_links_url&quot; /></div><input value=&quot;false&quot; type=&quot;hidden&quot; name=&quot;answer[links_attributes][new_links][_destroy]&quot; id=&quot;answer_links_attributes_new_links__destroy&quot; /><a class=&quot;remove_fields dynamic&quot; href=&quot;#&quot;>remove link</a></div>" href="#">add link</a>
+
+          input type="submit" name="commit" value="Save" data-disable-with="Save"
+
+    p | <<<<<<<<<<<<<<<
+    

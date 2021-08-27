@@ -63,8 +63,8 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
-    autoprefixer-rails (10.2.5.1)
-      execjs (> 0)
+    autoprefixer-rails (10.3.1.0)
+      execjs (~> 2)
     aws-eventstream (1.1.1)
     aws-partitions (1.473.0)
     aws-sdk-core (3.115.0)
@@ -85,9 +85,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
-    bootstrap (5.0.1)
+    bootstrap (5.1.0)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.9.2, < 3)
+      popper_js (>= 2.9.3, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
@@ -101,6 +101,13 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     cocoon (1.2.15)
+    coffee-rails (5.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 5.2.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
@@ -121,6 +128,11 @@ GEM
     gist-embed-rails (2.0.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    gon (6.4.0)
+      actionpack (>= 3.0.20)
+      i18n (>= 0.7)
+      multi_json
+      request_store (>= 1.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
@@ -151,6 +163,7 @@ GEM
     mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
+    multi_json (1.15.0)
     net-http (0.1.1)
       net-protocol
       uri
@@ -171,7 +184,7 @@ GEM
     parser (3.0.1.1)
       ast (~> 2.4.1)
     pg (1.2.3)
-    popper_js (2.9.2)
+    popper_js (2.9.3)
     public_suffix (4.0.6)
     puma (5.3.2)
       nio4r (~> 2.0)
@@ -219,6 +232,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.1.1)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -275,6 +290,11 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
+    skim (0.11.0)
+      coffee-script
+      coffee-script-source (>= 1.2.0)
+      slim (>= 3.0)
+      sprockets (>= 2.0, < 5.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -330,13 +350,15 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3
   bootsnap (>= 1.4.4)
-  bootstrap (~> 5.0.1)
+  bootstrap (~> 5.1.0)
   byebug
   capybara (>= 3.26)
   cocoon
+  coffee-rails
   devise
   factory_bot_rails
   gist-embed-rails
+  gon
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   jquery-rails
@@ -354,6 +376,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers (~> 4.0)
+  skim
   slim-rails
   spring
   turbolinks (~> 5)

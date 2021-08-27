@@ -1,0 +1,7 @@
+= form_with model:resource.comments, url: polymorphic_path(resource, action: 'add_comment'), local: false, class: 'hidden comment_submit', html: { id: "comment-#{resource.class.name.downcase}-#{resource.id}" } do |f|
+  p
+    = f.label :body, 'Comment body'
+    = f.text_area :body
+ 
+  p
+    = f.submit 'Add'

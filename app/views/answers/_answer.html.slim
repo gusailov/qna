@@ -12,19 +12,21 @@
     
     = render 'shared/votes', resource: answer
 
+    = render 'shared/comments', resource: answer
+
     . id="answer-#{answer.id}-links"
       = render 'shared/links', resource: answer
     
     = answer.favorite? ? octicon('star-fill') : octicon('star')
 
+    - if current_user&.author_of?(answer.question) && !answer.favorite?
+     p
+       = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: { answer_id: answer.id }
+
     . id="answer-#{answer.id}-files"
       - if answer.files.attached?
         = render 'shared/files', resource: answer
-
-    - if current_user&.author_of?(answer.question) && !answer.favorite?
-      p
-        = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: { answer_id: answer.id }
-   
+      
     - if current_user&.author_of?(answer)
       p
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }

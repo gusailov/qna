@@ -1,11 +1,12 @@
 class Question < ApplicationRecord
   include Votable
+  include Commentable
 
   belongs_to :user
   has_many :answers, dependent: :destroy
   has_one :reward, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
-  
+
   has_many_attached :files
 
   accepts_nested_attributes_for :reward, reject_if: :all_blank

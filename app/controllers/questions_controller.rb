@@ -2,8 +2,10 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show update destroy]
   before_action :not_author_question, only: %i[update destroy]
+  after_action :publish_question, only: %i[create]
 
   include Voted
+  include Commented
 
   def index
     @questions = Question.all
@@ -11,6 +13,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    gon.question_id = @question.id
   end
 
   def new
@@ -53,5 +56,13 @@ class QuestionsController < ApplicationController
 
     redirect_to questions_path,
                 notice: 'Only author can delete this question.'
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast('questions_channel',
+                                 ApplicationController.render(partial: 'questions/question',
+                                                              locals: { question: @question }))
   end
 end

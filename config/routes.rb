@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  root to: 'questions#index'
+
   concern :votable do
     member do
       post 'vote_up'
@@ -9,8 +11,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: [:votable], shallow: true do
-    resources :answers, concerns: [:votable], shallow: true do
+  concern :commentable do
+    member do
+      post 'add_comment'
+    end
+  end
+
+  resources :questions, concerns: [:votable, :commentable], shallow: true do
+    resources :answers, concerns: [:votable, :commentable], shallow: true do
       patch 'favorite', on: :member
     end
   end
@@ -19,5 +27,5 @@ Rails.application.routes.draw do
 
   resources :rewards, only: %i[index]
 
-  root to: 'questions#index'
+  mount ActionCable.server => '/cable'
 end

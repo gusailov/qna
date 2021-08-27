@@ -1,7 +1,7 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-.question
+.question data={question_id: @question.id}
   h2 id="question-title"
     = @question.title
   
@@ -14,6 +14,8 @@
     = @question.rating
   
   = render 'shared/votes', resource: @question
+
+  = render 'shared/comments', resource: @question
  
   p | reward:  
 
@@ -37,7 +39,7 @@
 
 p | Answers:
 
-.answers
+.answers id="answers"
   = render @question.answers
 
 - if user_signed_in?

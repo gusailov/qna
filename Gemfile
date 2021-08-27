@@ -41,13 +41,19 @@ gem "jquery-rails"
 
 gem 'octicons_helper'
 
-gem 'bootstrap', '~> 5.0.1'
+gem 'bootstrap', '~> 5.1.0'
 
 gem 'aws-sdk-s3', require: false
 
 gem "cocoon"
 
 gem 'gist-embed-rails'
+
+gem 'gon'
+
+gem "skim"
+
+gem 'coffee-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -3,8 +3,9 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[update destroy favorite]
   before_action :not_author_answer, only: %i[update destroy]
-
+ 
   include Voted
+  include Commented
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -45,4 +46,5 @@ class AnswersController < ApplicationController
     redirect_to question_path(@answer.question_id),
                 notice: 'Only author can do something with answer.'
   end
+
 end

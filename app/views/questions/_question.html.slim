@@ -1,7 +1,9 @@
-tr
-  td
-    = link_to question.title, question_path(question)
-  td
-    = question.body
-  td
-    = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: "Are you sure?" }
+.question id="question-#{question.id}"   
+  = link_to question_path(question), class:"list-group-item list-group-item-action"  
+    .question_title
+      strong = question.title
+    .question_body
+      = question.body
+.question_buttons
+  = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: "Are you sure?" }
+hr

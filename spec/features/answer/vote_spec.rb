@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Authenticated user can vote for liked question', %q{
+feature 'Authenticated user can vote for liked answer', %q{
   In order to show to community,
   A question which is better than others
-  I'd like to be able to vote for question
+  I'd like to be able to vote for answer
 } do
   given!(:user) { create(:user) }
   given!(:author) { create(:user) }
