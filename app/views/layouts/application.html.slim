@@ -17,10 +17,19 @@ html
     .container-fluid
       . class="navbar navbar-expand-lg navbar-light bg-light"
         . class="container-fluid"
-          = link_to 'Questions', questions_path, class: "nav-link active"
-          = link_to 'Ask question', new_question_path, class: "nav-link active" 
-          = link_to 'Log out', destroy_user_session_path, class: "nav-link active", method: :delete
-          
+          . class="nav-item"
+            = link_to 'Questions', questions_path, class: "nav-link active"
+            = link_to 'Ask question', new_question_path, class: "nav-link active"
+            = current_user&.email
+          . class="nav-item"  
+            - if current_user
+              = link_to 'Log out', destroy_user_session_path, class: "nav-link active", method: :delete
+            - unless current_user
+              . 
+                = link_to "Log in", new_session_path(resource_name)
+              .
+                = link_to "Sign up", new_registration_path(resource_name)
+                        
       p class="notice" = notice 
       p class="alert" = alert
       == yield

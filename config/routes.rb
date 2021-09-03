@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users,
+             controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   root to: 'questions#index'
 
@@ -17,8 +18,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: [:votable, :commentable], shallow: true do
-    resources :answers, concerns: [:votable, :commentable], shallow: true do
+  resources :questions, concerns: %i[votable commentable], shallow: true do
+    resources :answers, concerns: %i[votable commentable], shallow: true do
       patch 'favorite', on: :member
     end
   end
