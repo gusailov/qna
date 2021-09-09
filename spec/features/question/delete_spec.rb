@@ -26,6 +26,6 @@ feature 'Author can delete his question', %q{
 
     first(:link, 'Delete question').click
 
-    expect(page).to have_content 'Only author can delete this question.'
+    expect(page).to have_content 'You are not authorized to access this page.'
   end
 end

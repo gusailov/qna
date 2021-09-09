@@ -1,4 +1,4 @@
-- unless current_user&.author_of?(resource)
+- if can?(:vote, resource)
   
   . id="#{resource.class.name.downcase}-#{resource.id}-vote"
     . id="vote-errors"

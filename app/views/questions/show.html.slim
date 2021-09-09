@@ -32,7 +32,7 @@
     = render 'shared/links', resource: @question
     
 
-  - if current_user&.author_of?(@question)
+  - if can?(:modify, @question)
     p
       = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: @question.id }
   = render 'edit_form'

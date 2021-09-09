@@ -19,7 +19,8 @@ html
         . class="container-fluid"
           . class="nav-item"
             = link_to 'Questions', questions_path, class: "nav-link active"
-            = link_to 'Ask question', new_question_path, class: "nav-link active"
+            - if can?(:create, Question)
+              = link_to 'Ask question', new_question_path, class: "nav-link active"
             = current_user&.email
           . class="nav-item"  
             - if current_user

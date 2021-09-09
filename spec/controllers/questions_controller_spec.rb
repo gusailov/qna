@@ -37,8 +37,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     it { expect(assigns(:question)).to be_a_new(Question) }
 
-    it { expect(assigns(:question).reward).to be_a_new(Reward) }
-
     it { expect(response).to render_template :new }
   end
 

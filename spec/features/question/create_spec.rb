@@ -20,7 +20,7 @@ feature 'User can create question', %q{
       fill_in 'Body', with: 'text text text'
       click_on 'Ask'
 
-      expect(page).to have_content 'Your question successfully created.'
+      expect(page).to have_content 'Question was successfully created.'
       expect(page).to have_content 'Test question'
       expect(page).to have_content 'text text text'
     end
@@ -62,9 +62,8 @@ feature 'User can create question', %q{
 
   scenario 'Unauthenticated user tries to ask a question' do
     visit questions_path
-    click_on 'Ask question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_link 'Ask question'
   end
 
   describe 'Multiply sessions', js: true do
@@ -86,7 +85,7 @@ feature 'User can create question', %q{
         fill_in 'Body', with: 'text text text'
         click_on 'Ask'
 
-        expect(page).to have_content 'Your question successfully created.'
+        expect(page).to have_content 'Question was successfully created.'
         expect(page).to have_content 'Test question'
         expect(page).to have_content 'text text text'
       end

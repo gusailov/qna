@@ -6,6 +6,8 @@ RSpec.describe AttachmentsController, type: :controller do
   let!(:attachment) { question.files.first }
 
   describe 'DELETE #destroy' do
+    before { login(user) }
+
     it 'deletes the attachment' do
       expect {
         delete :destroy, params: { id: attachment }, format: :js

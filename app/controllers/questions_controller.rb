@@ -1,42 +1,45 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show update destroy]
-  before_action :not_author_question, only: %i[update destroy]
   after_action :publish_question, only: %i[create]
+
+  respond_to :js
+
+  load_and_authorize_resource
+
+  skip_authorization_check only: %i[index]
 
   include Voted
   include Commented
 
   def index
     @questions = Question.all
+    respond_with @questions
   end
 
   def show
-    @answer = Answer.new
+    @answer = @question.answers.build
     gon.question_id = @question.id
+    respond_with @question
   end
 
   def new
     @question = Question.new
-    @question.reward = Reward.new
+    respond_with @question
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    @question = current_user.questions.create(question_params)
+    respond_with @question
   end
 
   def update
     @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'You question successfully deleted.'
+    respond_with @question.destroy
   end
 
   private
@@ -49,13 +52,6 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                                     links_attributes: %i[id name url _destroy],
                                                     reward_attributes: %i[id title image _destroy])
-  end
-
-  def not_author_question
-    return if current_user.author_of?(@question)
-
-    redirect_to questions_path,
-                notice: 'Only author can delete this question.'
   end
 
   def publish_question

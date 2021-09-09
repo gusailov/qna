@@ -7,6 +7,6 @@
   - resource.comments&.each do |comment|
     .comment id="comment-#{comment.id}"
       = comment.body
-  
-= link_to 'Add comment', '#', class: 'add-comment-link', data: { resource_name: resource.class.name.downcase, resource_id: resource.id }
-= render 'shared/comment_form', resource: resource
+- if can?(:add_comment, resource)  
+  = link_to 'Add comment', '#', class: 'add-comment-link', data: { resource_name: resource.class.name.downcase, resource_id: resource.id }
+  = render 'shared/comment_form', resource: resource

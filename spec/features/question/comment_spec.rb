@@ -5,7 +5,8 @@ feature 'Authenticated user can add comments to question', %q{
   I'd like to be able to add comments to question
 } do
   given!(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given!(:author) { create(:user) }
+  given!(:question) { create(:question, user: author) }
 
   scenario 'failure', js: true do
     visit question_path(question)

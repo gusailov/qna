@@ -13,9 +13,8 @@ feature 'Author can delete links from his answer', %q{
 
   scenario 'Unauthenticated user tries to ask a question', js: true do
     visit questions_path
-    click_on 'Ask question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_link 'Ask question'
   end
 
   scenario "User tries to delete links from other user's answer", js: true do

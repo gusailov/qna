@@ -1,29 +1,34 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_question, only: %i[create]
+
   before_action :find_answer, only: %i[update destroy favorite]
-  before_action :not_author_answer, only: %i[update destroy]
- 
+  before_action :find_question, only: %i[create]
+
+  respond_to :js
+
+  authorize_resource
+
   include Voted
   include Commented
 
   def create
     @answer = current_user.answers.new(answer_params)
     @answer.question = @question
-    @answer.save
+    respond_with @answer.save
   end
 
   def update
     @answer.update(answer_params)
     @question = @answer.question
+    respond_with @answer
   end
 
   def destroy
-    @answer.destroy
+    respond_with @answer.destroy
   end
 
   def favorite
-    @answer.make_favorite! if current_user.author_of?(@answer.question)
+    respond_with @answer.make_favorite!
   end
 
   private
@@ -39,12 +44,4 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[id name url _destroy])
   end
-
-  def not_author_answer
-    return if current_user.author_of?(@answer)
-
-    redirect_to question_path(@answer.question_id),
-                notice: 'Only author can do something with answer.'
-  end
-
 end

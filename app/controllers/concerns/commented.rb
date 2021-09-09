@@ -3,6 +3,7 @@ module Commented
 
   included do
     before_action :set_commentable, only: %i[add_comment]
+
     after_action :publish_comment, only: %i[add_comment]
   end
 

@@ -13,12 +13,12 @@ class User < ApplicationRecord
 
   has_many :authorizations, dependent: :destroy
 
-  def author_of?(resource)
-    resource.user_id == id
-  end
-
   def voted?(resource)
     votes.exists?(votable: resource)
+  end
+
+  def author_of?(resource)
+    resource.user_id == id
   end
 
   def self.find_for_oauth(auth)

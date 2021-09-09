@@ -6,7 +6,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let(:author) { create(:user) }
+  let(:question) { create(:question, user: author) }
 
   describe 'POST #create' do
     before { login(user) }
@@ -83,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
 
     let!(:reward) { create(:reward, question: question) }
 
-    let(:answer) { create(:answer, question: question, user: user) }
+    let(:answer) { create(:answer, question: question, user: author) }
 
     it 'changes answer attribute favorite' do
       patch :favorite, params: { id: answer }, format: :js
