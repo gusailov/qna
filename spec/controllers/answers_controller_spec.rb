@@ -5,6 +5,10 @@ RSpec.describe AnswersController, type: :controller do
     let(:votable) { create(:answer, question: question, user: author) }
   end
 
+  it_behaves_like 'commented' do
+    let(:commentable) { create(:answer, question: question, user: author) }
+  end
+
   let(:user) { create(:user) }
   let(:author) { create(:user) }
   let(:question) { create(:question, user: author) }
@@ -39,7 +43,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'renders create template' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) },
-                      format: :js
+             format: :js
         expect(response).to render_template :create
       end
     end
@@ -71,7 +75,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'renders update view' do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) },
-                       format: :js
+              format: :js
         expect(response).to render_template :update
       end
     end

@@ -61,7 +61,7 @@
       - if @answer_files.length > 0
         - for f in @answer_files
           .file id="file-#{f.id}" 
-            a href=f.file_url #{f.name}
+            a href=f.url #{f.name}
 
             - if gon.user_id == @answer.user_id
               p

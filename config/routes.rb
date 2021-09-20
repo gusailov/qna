@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users,
              controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
@@ -28,5 +29,18 @@ Rails.application.routes.draw do
 
   resources :rewards, only: %i[index]
 
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: %i[index] do
+        get :me, on: :collection
+      end
+
+      resources :questions, shallow: true do
+        resources :answers
+      end
+    end
+  end
+
   mount ActionCable.server => '/cable'
 end
+

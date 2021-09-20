@@ -35,11 +35,10 @@ class Answer < ApplicationRecord
   end
 
   def files_array
-    ActiveStorage::Current.host = "http://localhost:3000"
     files.map do |file|
       { id: file.id,
         name: file.filename.to_s,
-        file_url: file.url }
+        url: Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true) }
     end
   end
 

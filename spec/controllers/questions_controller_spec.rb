@@ -5,6 +5,10 @@ RSpec.describe QuestionsController, type: :controller do
     let(:votable) { create(:question, user: author) }
   end
 
+  it_behaves_like 'commented' do
+    let(:commentable) { create(:question, user: author) }
+  end
+
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
