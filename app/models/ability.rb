@@ -61,5 +61,12 @@ class Ability
 
     can :read, User
     can :me, User, id: user.id
+
+    can :create, Subscription do |subscription|
+      !user.subscribed?(subscription.question)
+    end
+    can :destroy, Subscription do |subscription|
+      user.subscribed?(subscription.question)
+    end
   end
 end

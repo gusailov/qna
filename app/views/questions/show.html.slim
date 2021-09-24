@@ -1,36 +1,38 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-.question data={question_id: @question.id}
+.question data={ question_id: @question.id }
   h2 id="question-title"
     = @question.title
-  
+
   p id="question-body"
     | Question:
     = @question.body
-  
+
   . id="question-#{@question.id}-rating"
     | question rate:
     = @question.rating
-  
+
+  = render 'shared/subscription', resource: @question
+
   = render 'shared/votes', resource: @question
 
   = render 'shared/comments', resource: @question
- 
+
   p | reward:  
 
   . id="question-reward"
     - if @question.reward
       = @question.reward.title
-      = image_tag  @question.reward.image, style: "width: 100px"
+      = image_tag @question.reward.image, style: "width: 100px"
 
   . id="question-files"
     - if @question.files.attached?
       = render 'shared/files', resource: @question
-  
+
   . id="question-links"
     = render 'shared/links', resource: @question
-    
+
 
   - if can?(:modify, @question)
     p

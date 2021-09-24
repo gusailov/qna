@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_191155) do
+ActiveRecord::Schema.define(version: 2021_09_22_103657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,17 +134,6 @@ ActiveRecord::Schema.define(version: 2021_09_09_191155) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
-  create_table "ratings", force: :cascade do |t|
-    t.boolean "vote", null: false
-    t.string "votable_type"
-    t.bigint "votable_id"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_ratings_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_ratings_on_votable"
-  end
-
   create_table "rewards", force: :cascade do |t|
     t.string "title", null: false
     t.bigint "question_id"
@@ -155,6 +144,15 @@ ActiveRecord::Schema.define(version: 2021_09_09_191155) do
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "question_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_subscriptions_on_question_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -163,7 +161,11 @@ ActiveRecord::Schema.define(version: 2021_09_09_191155) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.boolean "admin"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -188,8 +190,9 @@ ActiveRecord::Schema.define(version: 2021_09_09_191155) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "questions", "users"
-  add_foreign_key "ratings", "users"
   add_foreign_key "rewards", "questions"
   add_foreign_key "rewards", "users"
+  add_foreign_key "subscriptions", "questions"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "votes", "users"
 end

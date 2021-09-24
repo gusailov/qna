@@ -13,7 +13,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  after_create_commit :broadcast_self
+  after_create_commit :broadcast_self, :notify
 
   def make_favorite!
     transaction do
@@ -50,5 +50,9 @@ class Answer < ApplicationRecord
         gist: link.gist?,
         gist_id: link.gist_id }
     end
+  end
+
+  def notify
+    NewAnswerJob.perform_later(self)
   end
 end

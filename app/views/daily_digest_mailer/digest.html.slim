@@ -1,0 +1,6 @@
+h1 Questions DailyDigest:
+
+- @daily_questions&.each do |question|
+  ul
+    li
+      = link_to "#{question.title}", question_url(question)

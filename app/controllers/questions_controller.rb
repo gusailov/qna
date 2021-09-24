@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @subscription = @question.subscription_of(current_user)
     gon.question_id = @question.id
     respond_with @question
   end
@@ -50,8 +51,8 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, files: [],
-                                                    links_attributes: %i[id name url _destroy],
-                                                    reward_attributes: %i[id title image _destroy])
+                                     links_attributes: %i[id name url _destroy],
+                                     reward_attributes: %i[id title image _destroy])
   end
 
   def publish_question
