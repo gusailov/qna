@@ -73,7 +73,7 @@ gem 'active_model_serializers', '~> 0.10'
 
 gem 'oj'
 
-gem 'sidekiq', '5.2.7'
+gem 'sidekiq'
 
 gem 'sinatra', require: false
 
