@@ -32,56 +32,32 @@ gem 'rubocop-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-
 gem 'net-http', '~> 0.1.1'
-
 gem "slim-rails"
-
 gem "jquery-rails"
-
 gem 'octicons_helper'
-
 gem 'bootstrap', '~> 5.1.0'
-
 gem 'aws-sdk-s3', require: false
-
 gem "cocoon"
-
 gem 'gist-embed-rails'
-
 gem 'gon'
-
 gem "skim"
-
 gem 'coffee-rails'
-
 gem 'omniauth'
-
 gem 'omniauth-github'
-
 gem 'omniauth-facebook'
-
 gem "omniauth-rails_csrf_protection"
-
 gem 'cancancan'
-
 gem 'responders'
-
 gem 'doorkeeper'
-
 gem 'active_model_serializers', '~> 0.10'
-
 gem 'oj'
-
 gem 'sidekiq'
-
 gem 'sinatra', require: false
-
 gem 'whenever', require: false
-
 gem 'sassc', '~> 2.1.0'
-
 gem 'mini_racer'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -110,6 +86,7 @@ group :development do
   gem "capistrano-passenger", require: false
   gem "capistrano-sidekiq", require: false
   gem 'capistrano-rails-console', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
