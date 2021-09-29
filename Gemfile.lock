@@ -467,7 +467,6 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap (>= 1.4.4)
   bootstrap (~> 5.1.0)
-  bundler
   byebug
   cancancan
   capistrano
