@@ -3,36 +3,38 @@
   .answer id="answer-#{answer.id}"
     . id="answer-errors-#{answer.id}"
 
-    p id="answer-body-#{answer.id}"
-      = answer.body
-   
-    . id="answer-#{answer.id}-rating"
-      | answer rate:
-      = answer.rating
-    
+    - cache answer do
+
+      p id="answer-body-#{answer.id}"
+        = answer.body
+
+      . id="answer-#{answer.id}-rating"
+        | answer rate:
+        = answer.rating
+
+      = answer.favorite? ? octicon('star-fill') : octicon('star')
+
     = render 'shared/votes', resource: answer
 
     = render 'shared/comments', resource: answer
 
     . id="answer-#{answer.id}-links"
       = render 'shared/links', resource: answer
-    
-    = answer.favorite? ? octicon('star-fill') : octicon('star')
 
     - if can?(:favorite, answer) && !answer.favorite?
-     p
-       = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: { answer_id: answer.id }
+      p
+        = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: { answer_id: answer.id }
 
     . id="answer-#{answer.id}-files"
       - if answer.files.attached?
         = render 'shared/files', resource: answer
-      
+
     - if can?(:modify, answer)
       p
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       p
         = link_to 'Delete answer', answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true, data: { answer_id: answer.id, confirm: "Are you sure?" }
-    
+
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       p
         = f.label :body, 'Your answer'

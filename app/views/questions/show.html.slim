@@ -2,16 +2,17 @@
   = render 'shared/errors', resource: @question
 
 .question data={ question_id: @question.id }
-  h2 id="question-title"
-    = @question.title
+  - cache @question do
+    h2 id="question-title"
+      = @question.title
 
-  p id="question-body"
-    | Question:
-    = @question.body
+    p id="question-body"
+      | Question:
+      = @question.body
 
-  . id="question-#{@question.id}-rating"
-    | question rate:
-    = @question.rating
+    . id="question-#{@question.id}-rating"
+      | question rate:
+      = @question.rating
 
   = render 'shared/subscription', resource: @question
 
@@ -19,12 +20,12 @@
 
   = render 'shared/comments', resource: @question
 
-  p | reward:  
-
+  p | reward:
   . id="question-reward"
     - if @question.reward
-      = @question.reward.title
-      = image_tag @question.reward.image, style: "width: 100px"
+      - cache @question.reward do
+        = @question.reward.title
+        = image_tag @question.reward.image, style: "width: 100px"
 
   . id="question-files"
     - if @question.files.attached?

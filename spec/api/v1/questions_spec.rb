@@ -15,11 +15,11 @@ describe 'Questions API', type: :request do
       let!(:questions) { create_list(:question, 2, user: user) }
       let(:question) { questions.first }
       let(:question_response) { json['questions'].first }
-      let!(:answers) { create_list(:answer, 3, user: user, question: question) }
+      let(:answers) { create_list(:answer, 3, user: user, question: question) }
 
       before {
         get api_path, params: { access_token: access_token.token },
-            headers: headers
+                      headers: headers
       }
 
       it_behaves_like 'status 200'
@@ -52,7 +52,7 @@ describe 'Questions API', type: :request do
 
       before {
         get api_path, params: { access_token: access_token.token },
-            headers: headers
+                      headers: headers
       }
 
       it_behaves_like 'status 200'
@@ -60,7 +60,7 @@ describe 'Questions API', type: :request do
       it_behaves_like 'lists of links, comments, files' do
         let(:resp) { question_response }
       end
-    
+
       describe 'answers' do
         let(:answer) { answers.first }
         let(:answer_response) { question_response['answers'].first }
@@ -91,14 +91,16 @@ describe 'Questions API', type: :request do
     context 'authorized' do
       before {
         post api_path, params: { question: attributes_for(:question), access_token: access_token.token },
-             headers: headers
+                       headers: headers
       }
 
       it_behaves_like 'status 200'
 
       it 'create question' do
-        expect { post api_path, params: { question: attributes_for(:question), access_token: access_token.token },
-                      headers: headers }.to change(Question, :count).by(1)
+        expect {
+          post api_path, params: { question: attributes_for(:question), access_token: access_token.token },
+                         headers: headers
+        }.to change(Question, :count).by(1)
       end
     end
   end
@@ -115,7 +117,7 @@ describe 'Questions API', type: :request do
       before {
         patch api_path, params: { question: { title: 'new title', body: 'new body' },
                                   access_token: access_token.token },
-              headers: headers
+                        headers: headers
       }
 
       it_behaves_like 'status 200'
@@ -136,17 +138,17 @@ describe 'Questions API', type: :request do
       let(:method) { :delete }
     end
     context 'authorized' do
-
       it 'returns 200 status' do
         delete api_path, params: { access_token: access_token.token }, headers: headers
         expect(response).to be_successful
       end
 
       it 'delete question' do
-        expect { delete api_path, params: { access_token: access_token.token },
-                        headers: headers }.to change(Question, :count).by(-1)
+        expect {
+          delete api_path, params: { access_token: access_token.token },
+                           headers: headers
+        }.to change(Question, :count).by(-1)
       end
     end
-
   end
 end
