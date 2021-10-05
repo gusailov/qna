@@ -1,2 +1,2 @@
-web: bundle exec rails server -p $PORT
-worker: bundle exec sidekiq
+web: bin/rails server -p ${PORT:3000} -e RAILS_ENV
+worker: sidekiq

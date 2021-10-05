@@ -1,4 +1,4 @@
-redis = { url: 'redis://redistogo:4c04a08a24ee46b9e01f14195b3b5c7a@tarpon.redistogo.com:9003/' }
+redis = { url: 'redis://:p4878f8b0bdfe284496ca43d781f9a27c9fc0818dfca324c35ebebbc2b76bdaf8@ec2-3-94-172-123.compute-1.amazonaws.com:22889' }
 Sidekiq.configure_client do |config|
   config.redis = redis
 end
