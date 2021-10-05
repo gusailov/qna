@@ -6,7 +6,7 @@
 
   - resource.comments&.each do |comment|
     - cache comment do
-      .comment id="comment-#{comment.id}"
+      .comment class="card m-2 text-muted" id="comment-#{comment.id}"
         = comment.body
 - if can?(:add_comment, resource)
   = link_to 'Add comment', '#', class: 'add-comment-link', data: { resource_name: resource.class.name.downcase, resource_id: resource.id }

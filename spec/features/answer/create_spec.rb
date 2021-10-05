@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'rails_helper'
 
 feature 'User can create answer on question page', %q{
   In order to answer the question,

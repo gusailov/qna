@@ -1,7 +1,7 @@
-= form_with model:resource.comments, url: polymorphic_path(resource, action: 'add_comment'), local: false, class: 'hidden comment_submit', html: { id: "comment-#{resource.class.name.downcase}-#{resource.id}" } do |f|
+= form_with model:resource.comments, url: polymorphic_path(resource, action: 'add_comment'), local: false, class: 'hidden comment_submit m-2', html: { id: "comment-#{resource.class.name.downcase}-#{resource.id}" } do |f|
+  .form-group
+    = f.label :body, 'Comment body', class: "form-label text-muted"
+    = f.text_area :body, class: "form-control"
+
   p
-    = f.label :body, 'Comment body'
-    = f.text_area :body
- 
-  p
-    = f.submit 'Add'
+    = f.submit 'Add', class: "btn btn-info mt-1"

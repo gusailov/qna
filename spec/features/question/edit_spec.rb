@@ -31,15 +31,17 @@ feature 'Author can edit his question', %q{
     end
 
     scenario 'edits his question' do
-      fill_in 'Question title', with: 'edited question title'
-      fill_in 'Question body', with: 'edited question body'
+      within '.question' do
+        fill_in 'Question title', with: 'edited question title'
+        fill_in 'Question body', with: 'edited question body'
 
-      click_on 'Save'
+        click_on 'Save'
 
-      expect(page).to_not have_content question.body
-      expect(page).to have_content 'edited question title'
-      expect(page).to have_content 'edited question body'
-      expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_content question.body
+        expect(page).to have_content 'edited question title'
+        expect(page).to have_content 'edited question body'
+        expect(page).to_not have_selector 'textarea'
+      end
     end
 
     scenario 'edits his question with errors' do

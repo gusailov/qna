@@ -2,20 +2,21 @@
   = render 'shared/errors', resource: @answer
 
 p | New answer:
-= form_with model: [@question, @answer], local: false, class: "new-answer" do |f|
-  p
-    = f.label :body
-    = f.text_field :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-   
-  p Links: 
-  p 
+= form_with model: [@question, @answer], local: false, class: "new-answer form-control" do |f|
+
+  .form-floating
+    = f.text_area :body, class: "form-control"
+    = f.label :body, class: "form-label"
+
+  .btn-group
+    .form-group
+      = f.label :files, class: "form-label"
+      = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-light m-1"
+
     = f.fields_for :links do |l|
       = render 'link_fields', f: l
     .links
-      = link_to_add_association 'add link', f, :links
-  
+    = link_to_add_association 'add link', f, :links, class: "btn btn-light"
+
   p
-    = f.submit 'Answer the question'
+    = f.submit 'Answer the question', class: "btn btn-info"

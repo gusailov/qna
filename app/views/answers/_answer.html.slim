@@ -1,33 +1,23 @@
 - if answer.persisted?
 
-  .answer id="answer-#{answer.id}"
+  .answer class="card m-2" id="answer-#{answer.id}"
     . id="answer-errors-#{answer.id}"
 
     - cache answer do
 
-      p id="answer-body-#{answer.id}"
-        = answer.body
-
-      . id="answer-#{answer.id}-rating"
-        | answer rate:
-        = answer.rating
-
       = answer.favorite? ? octicon('star-fill') : octicon('star')
 
-    = render 'shared/votes', resource: answer
+      .card-body id="answer-body-#{answer.id}"
+        = answer.body
 
-    = render 'shared/comments', resource: answer
+    .card class="m-2"
+      = render 'shared/comments', resource: answer
 
-    . id="answer-#{answer.id}-links"
-      = render 'shared/links', resource: answer
 
     - if can?(:favorite, answer) && !answer.favorite?
       p
         = link_to 'Favorite', favorite_answer_path(answer), class: 'favorite-answer-link', method: :patch, remote: true, data: { answer_id: answer.id }
 
-    . id="answer-#{answer.id}-files"
-      - if answer.files.attached?
-        = render 'shared/files', resource: answer
 
     - if can?(:modify, answer)
       p
@@ -49,4 +39,16 @@
           = link_to_add_association 'add link', f, :links
       p
         = f.submit 'Save'
-    p | <<<<<<<<<<<<<<<
+    .card-footer class="row"
+      .col
+        . id="answer-#{answer.id}-rating"
+          | answer rate:
+          = answer.rating
+        = render 'shared/votes', resource: answer
+
+      .col id="answer-#{answer.id}-links"
+        = render 'shared/links', resource: answer
+
+      .col id="answer-#{answer.id}-files"
+        - if answer.files.attached?
+          = render 'shared/files', resource: answer

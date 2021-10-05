@@ -12,9 +12,9 @@ feature 'Author can delete his question', %q{
   scenario 'Author tries to delete his a question' do
     sign_in(author)
 
-    visit questions_path
+    visit question_path(question)
 
-    first(:link, 'Delete question').click
+    click_on 'Delete question'
 
     expect(page).to have_content 'You question successfully deleted.'
   end
@@ -22,10 +22,8 @@ feature 'Author can delete his question', %q{
   scenario 'Not author tries to delete a question' do
     sign_in(user)
 
-    visit questions_path
+    visit question_path(question)
 
-    first(:link, 'Delete question').click
-
-    expect(page).to have_content 'You are not authorized to access this page.'
+    expect(page).to_not have_link 'Delete question'
   end
 end
