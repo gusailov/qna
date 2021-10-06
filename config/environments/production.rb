@@ -66,7 +66,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'qna-gusailov.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    address: 'smtp.mailgun.org',
     port: 587,
     user_name: Rails.application.credentials[:smtp][:smtp_username],
     password: Rails.application.credentials[:smtp][:smtp_password],
