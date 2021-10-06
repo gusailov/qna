@@ -1,17 +1,19 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-.question class="card" data={ question_id: @question.id }
+.question class="card container-fluid" data={ question_id: @question.id }
   - cache @question do
-    .card-header class="row" id="question-title"
-      .col-10
+    .card-header class="col" id="question-title"
+      .row class="align-self-start"
         = @question.title
 
-      .col-2
-        . id="question-#{@question.id}-rating"
-          | question rate:
-          = @question.rating
-        = render 'shared/votes', resource: @question
+      .row
+        .col class="align-self-end"
+          . id="question-#{@question.id}-rating"
+            | question rate:
+            = @question.rating
+        .col-auto class="align-self-end"
+          = render 'shared/votes', resource: @question
 
     .card-body id="question-body"
       | Question:
@@ -40,8 +42,8 @@
 
   - if can?(:modify, @question)
     .question_buttons class="mt-2"
-      = link_to 'Edit question', '#', class: 'edit-question-link btn btn-warning m-2', data: { question_id: @question.id }
-      = link_to 'Delete question', question_path(@question), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" }
+      = link_to 'Edit question', '#', class: 'edit-question-link btn btn-outline-dark m-2', data: { question_id: @question.id }
+      = link_to 'Delete question', question_path(@question), class: "btn btn-outline-dark", method: :delete, data: { confirm: "Are you sure?" }
   = render 'edit_form'
 
 

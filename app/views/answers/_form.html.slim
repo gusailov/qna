@@ -8,15 +8,15 @@ p | New answer:
     = f.text_area :body, class: "form-control"
     = f.label :body, class: "form-label"
 
-  .btn-group
-    .form-group
+  .row class="align-items-center"
+    .col-auto
       = f.label :files, class: "form-label"
-      = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-light m-1"
+      = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-outline-dark m-2"
 
     = f.fields_for :links do |l|
       = render 'link_fields', f: l
-    .links
-    = link_to_add_association 'add link', f, :links, class: "btn btn-light"
+    .links class="col-auto"
+      = link_to_add_association 'add link', f, :links, class: "btn btn-outline-dark m-2"
 
   p
-    = f.submit 'Answer the question', class: "btn btn-info"
+    = f.submit 'Answer the question', class: "btn btn-outline-dark"
