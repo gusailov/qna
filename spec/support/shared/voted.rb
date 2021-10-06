@@ -17,7 +17,7 @@ shared_examples_for 'voted' do
 
     it 'renders json' do
       post :vote_up, params: { id: votable }, format: :json
-
+      votable.reload
       expected = {
         item: votable,
         item_rating: votable.rating,
@@ -37,7 +37,7 @@ shared_examples_for 'voted' do
 
     it 'renders json' do
       post :vote_up, params: { id: votable }, format: :json
-
+      votable.reload
       expected = {
         item: votable,
         item_rating: votable.rating,
