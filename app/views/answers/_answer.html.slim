@@ -26,19 +26,20 @@
         = link_to 'Delete answer', answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true, data: { answer_id: answer.id, confirm: "Are you sure?" }
 
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-      p
-        = f.label :body, 'Your answer'
-        = f.text_area :body
+      .form-floating
+        = f.text_area :body, class: "form-control"
+        = f.label :body, 'Your answer', class: "form-label"
+
       p
         = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+        = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-outline-dark"
       p
         = f.fields_for :links do |l|
           = render 'link_fields', f: l
         .links
-          = link_to_add_association 'add link', f, :links
+          = link_to_add_association 'add link', f, :links, class: "btn btn-outline-dark"
       p
-        = f.submit 'Save'
+        = f.submit 'Save', class: "btn btn-outline-dark"
     .card-footer class="row"
       .col
         . id="answer-#{answer.id}-rating"

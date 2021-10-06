@@ -1,27 +1,30 @@
 = render 'shared/errors', resource: @question
+.row class="justify-content-center"
+  .col-md-4 class="card card-border-primary"
+    .card-body
+      = form_with model: @question, local: true do |f|
+        .form-group
+          .form-floating
+            = f.text_field :title, class: "form-control"
+            = f.label :title, class: "form-label"
+          .form-floating class="mt-2"
+            = f.text_area :body, class: "form-control"
+            = f.label :body, class: "form-label"
+          p
+            = f.label :files
+            = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-outline-dark m-2"
 
-= form_with model: @question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title
-  p
-    = f.label :body
-    = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
+          p Links:
+          p
+            = f.fields_for :links do |l|
+            .links
+              = link_to_add_association 'add link', f, :links, class: "btn btn-outline-dark"
 
-  p Links: 
-  p 
-    = f.fields_for :links do |l| 
-    .links
-      = link_to_add_association 'add link', f, :links
-  
-  p Reward: 
-  p 
-    = f.fields_for :reward do |r| 
-    .reward
-      = link_to_add_association 'create reward', f, :reward
-  
-  p
-    = f.submit 'Ask'
+          p Reward:
+          p
+            = f.fields_for :reward do |r|
+            .reward
+              = link_to_add_association 'create reward', f, :reward, class: "btn btn-outline-dark"
+
+          p
+            = f.submit 'Ask', class: "btn btn-outline-dark"
